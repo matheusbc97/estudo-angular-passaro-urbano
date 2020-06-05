@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http'
-import { RouterModule } from '@angular/router'
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import ptBr from '@angular/common/locales/pt';
+import { RouterModule } from '@angular/router';
 
-import {ROUTES} from './app.routes'
+import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { TopoComponent } from './topo/topo.component';
@@ -11,6 +13,13 @@ import { RodapeComponent } from './rodape/rodape.component';
 import { HomeComponent } from './home/home.component';
 import { DiversaoComponent } from './diversao/diversao.component';
 import { RestaurantesComponent } from './restaurantes/restaurantes.component';
+import { OfertaComponent } from './oferta/oferta.component';
+import { APIInterceptor } from './interceptors';
+import { ComoUsarComponent } from './oferta/como-usar/como-usar.component';
+import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component';
+import { DescricaoReduzida } from './utils/descricao-reduzida.pipe';
+import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component';
+registerLocaleData(ptBr);
 
 @NgModule({
   declarations: [
@@ -19,14 +28,25 @@ import { RestaurantesComponent } from './restaurantes/restaurantes.component';
     RodapeComponent,
     HomeComponent,
     DiversaoComponent,
-    RestaurantesComponent
+    RestaurantesComponent,
+    OfertaComponent,
+    ComoUsarComponent,
+    OndeFicaComponent,
+    DescricaoReduzida,
+    OrdemCompraComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    RouterModule.forRoot(ROUTES)
+  imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(ROUTES)],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: APIInterceptor,
+      multi: true,
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt',
+    },
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
