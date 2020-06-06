@@ -4,7 +4,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { RouterModule } from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import {CarrinhoService} from './carrinho.service';
 
 import { ROUTES } from './app.routes';
 
@@ -38,8 +40,13 @@ registerLocaleData(ptBr);
     OrdemCompraComponent,
     OrdemCompraSucessoComponent
   ],
-  imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(ROUTES), FormsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot(ROUTES),
+    ReactiveFormsModule],
   providers: [
+    CarrinhoService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: APIInterceptor,

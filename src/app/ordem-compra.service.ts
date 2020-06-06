@@ -8,18 +8,18 @@ export class OrdemCompraService {
 
     constructor(private http: HttpClient) {}
 
-   public efetivarCompra(pedido: Pedido) {
+    public efetivarCompra(pedido: Pedido) {
 
-        const headers = new HttpHeaders();
+    const headers = new HttpHeaders();
 
-        headers.append('Content-type', 'application/json');
+    headers.append('Content-type', 'application/json');
 
-        return this.http.post(
-            `pedidos`,
-            pedido,
-            {
-              headers
-            }
-        );
+    return this.http.post<any>(
+        `pedidos`,
+        pedido,
+        {
+          headers
+        }
+    );
     }
 }
